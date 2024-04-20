@@ -29,6 +29,10 @@ public class EnemyController : MonoBehaviour
             {
                 StartCoroutine(GetComponent<BuildingDestruction>().OnBuildingDestroyed());
             }
+            else
+            {
+                Destroy(gameObject);
+            }
             return true;
         }
         return false;

@@ -2,12 +2,14 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class HealthManager : MonoBehaviour
 {
     public FloatVariable playerMaxHealth;
     private float playerHealth;
     [SerializeField] private GameOverManager _gameOverManager;
+    [SerializeField] private Slider healthBar;
 
     private void Start()
     {
@@ -19,6 +21,7 @@ public class HealthManager : MonoBehaviour
         if (other.CompareTag("EnemyBullet"))
         {
             playerHealth -= 10;
+            healthBar.value -= 10;
             Destroy(other.gameObject);
             if (playerHealth <= 0)
             {
@@ -34,6 +37,8 @@ public class HealthManager : MonoBehaviour
 
     public void UpgradeHealth()
     {
+        healthBar.maxValue += 20;
+        healthBar.value = healthBar.maxValue;
         playerHealth += 20;
     }
 }
