@@ -8,6 +8,8 @@ public class GameManager : MonoBehaviour
     [SerializeField] private FloatVariable globalSpeed;
     [SerializeField] private GameObject stationCanvas;
     [SerializeField] private GameObject stationObject;
+    [SerializeField] private AudioSource departingSound;
+    [SerializeField] private AudioSource runningSound;
     [SerializeField] private SpawnBuildingsManager topSpawner;
     [SerializeField] private SpawnBuildingsManager botSpawner;
     private List<GameObject> ObjectToBeDestroyed = new List<GameObject>();
@@ -55,6 +57,7 @@ public class GameManager : MonoBehaviour
     public void StartGameAgain()
     {
         animator.SetTrigger("close");
+        departingSound.Play();
         topSpawner.shouldSpawn = true;
         botSpawner.shouldSpawn = true;
         topSpawner.SpawnBuilding();
@@ -76,6 +79,7 @@ public class GameManager : MonoBehaviour
     private IEnumerator startStationSequence()
     {
         MakeGameHarder();
+        runningSound.volume = 0f;
         topSpawner.shouldSpawn = false;
         botSpawner.shouldSpawn = false;
         stationObject.GetComponent<StationMovement>().shouldMove = true;
@@ -120,6 +124,8 @@ public class GameManager : MonoBehaviour
 
             yield return null;
         }
+
+        runningSound.volume = .1f;
         stationCanvas.SetActive(false);
         yield return new WaitForSeconds(2f);
         originalTime = TimeBeforeStation.value;
