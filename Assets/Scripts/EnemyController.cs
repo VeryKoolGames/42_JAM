@@ -15,7 +15,11 @@ public class EnemyController : MonoBehaviour
 
     private void Start()
     {
-        onEnemySpawnEvent.Raise(gameObject);
+        if (!isABuilding)
+        {
+            onEnemySpawnEvent.Raise(gameObject);
+        }
+        
     }
 
     public bool UpdateHealth(int playerDmg)

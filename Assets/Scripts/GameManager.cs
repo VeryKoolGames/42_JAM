@@ -19,7 +19,7 @@ public class GameManager : MonoBehaviour
     public Animator animator;
     private void Awake()
     {
-        globalSpeed.value = 0.7f;
+        globalSpeed.value = 0.85f;
         Instance = this;
     }
     
@@ -69,7 +69,7 @@ public class GameManager : MonoBehaviour
         }
 
         globalSpeed.value = 0;
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(0.2f);
         animator.SetTrigger("open");
         stationCanvas.SetActive(true);
     }
