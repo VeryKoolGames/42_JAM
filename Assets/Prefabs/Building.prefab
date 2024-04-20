@@ -146,6 +146,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: {fileID: 11400000, guid: b0ca0ced29469436ca1309c59e235b7b, type: 2}
+  onEnemySpawnEvent: {fileID: 11400000, guid: 12e38da2681cc412a9456b7dda7583ee, type: 2}
 --- !u!114 &-5866872886106077644
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -159,3 +160,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyHealth: 30
+  scoreGained: 50
+  playerDmg: {fileID: 11400000, guid: 367af354e70d240238f6b973543b4242, type: 2}
+  onEnemySpawnEvent: {fileID: 11400000, guid: 12e38da2681cc412a9456b7dda7583ee, type: 2}

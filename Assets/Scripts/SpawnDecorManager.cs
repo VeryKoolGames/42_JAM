@@ -37,7 +37,6 @@ public class SpawnDecorManager : MonoBehaviour
             {
                 spawnBuilding();
             }
-
             timeToSpawn = Random.Range(lowSpawnTreshold.value, topSpawnTreshold.value);
             currentTime = 0;
         }

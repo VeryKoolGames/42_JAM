@@ -10,16 +10,33 @@ public class ShootingManager : MonoBehaviour
     public GameObject bulletPrefab;
     public FloatVariable bulletSpeed;
     public float spreadAngle = 15f;
+    public FloatVariable shootRate; // Time in seconds between shots
+    public FloatVariable playerDmg; // Time in seconds between shots
+    public float currentShootRate; // Time in seconds between shots
+    public float currentPlayerDmg; // Time in seconds between shots
+    private float nextShootTime = 0f; // When the next shot can happen
+    private bool isShooting; // When the next shot can happen
 
     private void Start()
     {
         GetComponent<OnPowerUpListener>().OnPowerUpActivation += UpdateShootingState;
         currentShootingType = ShootingTypesEnum.BASE;
+        currentShootRate = shootRate.value;
+        currentPlayerDmg = playerDmg.value;
     }
 
     void Update()
     {
         if (Input.GetMouseButtonDown(0) && InputManager.Instance.inputEnabled)
+        {
+            isShooting = true;
+        }
+
+        if (Input.GetMouseButtonUp(0))
+        {
+            isShooting = false;
+        }
+        if (isShooting && Time.time >= nextShootTime)
         {
             switch (currentShootingType)
             {
@@ -30,6 +47,8 @@ public class ShootingManager : MonoBehaviour
                     ShootBulletsInCone();
                     break;
             }
+
+            nextShootTime = Time.time + currentShootRate;
         }
     }
 
@@ -94,14 +113,18 @@ public class ShootingManager : MonoBehaviour
         GameObject bullet = Instantiate(bulletPrefab, transform.position, Quaternion.identity);
         if (isSpectral)
             bullet.GetComponent<BulletController>().isSpectral = true;
+        bullet.GetComponent<BulletController>().playerDmg = (int)currentPlayerDmg;
         Rigidbody2D rb = bullet.GetComponent<Rigidbody2D>();
-        if (rb != null)
-        {
-            rb.velocity = direction * bulletSpeed.value;
-        }
-        else
-        {
-            Debug.LogError("Bullet prefab does not have a Rigidbody2D component attached.");
-        }
+        rb.velocity = direction * bulletSpeed.value;
+    }
+
+    public void UpgradeShootingRate()
+    {
+        currentShootRate -= 05f;
+    }
+
+    public void UpgradePlayerDmg()
+    {
+        currentPlayerDmg += 10;
     }
 }

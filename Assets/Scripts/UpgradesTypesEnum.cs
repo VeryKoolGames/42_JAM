@@ -4,6 +4,6 @@ namespace DefaultNamespace
     {
         UPGRADEHEALTH,
         UPGRADEBULLETSPEED,
-        UPGRADEBULLETSIZE,
+        UPGRADEDMG,
     }
 }
