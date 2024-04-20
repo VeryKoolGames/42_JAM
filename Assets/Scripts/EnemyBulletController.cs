@@ -16,7 +16,7 @@ public class EnemyBulletController : MonoBehaviour
 
     private void Update()
     {
-        transform.position = Vector2.MoveTowards(transform.position, targetPosition, 3f * Time.deltaTime);
+        transform.position = Vector2.MoveTowards(transform.position, targetPosition, 0.3f * Time.deltaTime);
     }
 
 }

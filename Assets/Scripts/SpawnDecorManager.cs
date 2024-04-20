@@ -20,7 +20,6 @@ public class SpawnDecorManager : MonoBehaviour
         timeToSpawn = Random.Range(lowSpawnTreshold.value, topSpawnTreshold.value);
     }
 
-    // Update is called once per frame
     void Update()
     {
         if (!InputManager.Instance.inputEnabled)
@@ -45,7 +44,7 @@ public class SpawnDecorManager : MonoBehaviour
     private void spawnBuilding()
     {
         int random = Random.Range(0, BuildingsPrefabs.Count);
-        float yOffset = Random.Range(-1.0f, 1.0f);
+        float yOffset = Random.Range(-0.02f, 0.02f);
         Vector3 spawnPosition = new Vector3(transform.position.x, transform.position.y + yOffset, transform.position.z);
 
         Instantiate(BuildingsPrefabs[random], spawnPosition, Quaternion.identity);

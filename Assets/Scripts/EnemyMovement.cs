@@ -15,7 +15,7 @@ namespace DefaultNamespace
                 return;
             while ((Vector2)transform.position != targetPosition)
             {
-                transform.position = Vector2.MoveTowards(transform.position, targetPosition, 3f * Time.deltaTime);
+                transform.position = Vector2.MoveTowards(transform.position, targetPosition, 0.3f * Time.deltaTime);
             }
         }
     }

@@ -29,7 +29,7 @@ public class SpawnEnemyManager : MonoBehaviour
         Vector2 targetPosition = GetRandomPointInCollider(targetArea);
         while (enemy != null && (Vector2)enemy.transform.position != targetPosition)
         {
-            enemy.transform.position = Vector2.MoveTowards(enemy.transform.position, targetPosition, 3f * Time.deltaTime);
+            enemy.transform.position = Vector2.MoveTowards(enemy.transform.position, targetPosition, 0.5f * Time.deltaTime);
             yield return null;
         }
     }
