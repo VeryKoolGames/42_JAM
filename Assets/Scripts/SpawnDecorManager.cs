@@ -6,7 +6,6 @@ using Random = UnityEngine.Random;
 
 public class SpawnDecorManager : MonoBehaviour
 {
-    [SerializeField] private List<GameObject> BuildingsPrefabs = new List<GameObject>();
     [SerializeField] private List<GameObject> PowerUpPrefabs = new List<GameObject>();
     [SerializeField] private FloatVariable speed;
     [SerializeField] private FloatVariable lowSpawnTreshold;
@@ -32,22 +31,9 @@ public class SpawnDecorManager : MonoBehaviour
             {
                 spawnPowerUp();
             }
-            else
-            {
-                spawnBuilding();
-            }
             timeToSpawn = Random.Range(lowSpawnTreshold.value, topSpawnTreshold.value);
             currentTime = 0;
         }
-    }
-
-    private void spawnBuilding()
-    {
-        // int random = Random.Range(0, BuildingsPrefabs.Count);
-        // float yOffset = Random.Range(-0.02f, 0.02f);
-        // Vector3 spawnPosition = new Vector3(transform.position.x, transform.position.y + yOffset, transform.position.z);
-        //
-        // Instantiate(BuildingsPrefabs[random], spawnPosition, Quaternion.identity);
     }
     
     private void spawnPowerUp()

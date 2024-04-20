@@ -10,6 +10,7 @@ TagManager:
   - EnemyBullet
   - DecorTP
   - Vegetation
+  - BuildingSpawn
   layers:
   - Default
   - TransparentFX

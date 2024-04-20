@@ -8,6 +8,8 @@ public class GameManager : MonoBehaviour
     [SerializeField] private FloatVariable globalSpeed;
     [SerializeField] private GameObject stationCanvas;
     [SerializeField] private GameObject stationObject;
+    [SerializeField] private SpawnBuildingsManager topSpawner;
+    [SerializeField] private SpawnBuildingsManager botSpawner;
     private List<GameObject> ObjectToBeDestroyed = new List<GameObject>();
     private float originalTime;
     private float originalSpeed;
@@ -53,6 +55,11 @@ public class GameManager : MonoBehaviour
     public void StartGameAgain()
     {
         animator.SetTrigger("close");
+        topSpawner.shouldSpawn = true;
+        botSpawner.shouldSpawn = true;
+        topSpawner.SpawnBuilding();
+        botSpawner.SpawnBuilding();
+        InputManager.Instance.inputEnabled = true;
         StartCoroutine(startGameAgain());
     }
 
@@ -69,6 +76,8 @@ public class GameManager : MonoBehaviour
     private IEnumerator startStationSequence()
     {
         MakeGameHarder();
+        topSpawner.shouldSpawn = false;
+        botSpawner.shouldSpawn = false;
         stationObject.GetComponent<StationMovement>().shouldMove = true;
         float duration = 9f;
         float startValue = globalSpeed.value;
@@ -111,8 +120,8 @@ public class GameManager : MonoBehaviour
 
             yield return null;
         }
+        stationCanvas.SetActive(false);
         yield return new WaitForSeconds(2f);
-        InputManager.Instance.inputEnabled = true;
         originalTime = TimeBeforeStation.value;
         isInStation = false;
     }
