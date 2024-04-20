@@ -87,13 +87,10 @@ public class GameManager : MonoBehaviour
 
         while (elapsedTime < duration)
         {
-            // Calculate the new value of the float by interpolating between the start value and max value
             globalSpeed.value = Mathf.Lerp(startValue, originalSpeed, elapsedTime / duration);
 
-            // Increment the elapsed time by the time of the last frame
             elapsedTime += Time.deltaTime;
 
-            // Yield until the next frame
             yield return null;
         }
         yield return new WaitForSeconds(2f);

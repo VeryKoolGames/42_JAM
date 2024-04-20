@@ -23,7 +23,7 @@ public class BulletController : MonoBehaviour
             bool res = other.gameObject.GetComponent<EnemyController>().UpdateHealth(playerDmg);
             if (!res) return;
             _enemyDestroyed.Raise(other.gameObject.GetComponent<EnemyController>().scoreGained);
-            Destroy(other.gameObject);
+            
         }
         else if (other.CompareTag("PowerUp"))
         {

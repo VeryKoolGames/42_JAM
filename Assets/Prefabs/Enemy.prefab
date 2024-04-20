@@ -146,6 +146,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyHealth: 30
   scoreGained: 100
+  originalMaterial: {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  damageMaterial: {fileID: 2100000, guid: 2d973d1cc069a4067bdfe91efd58f31c, type: 2}
   onEnemySpawnEvent: {fileID: 11400000, guid: 12e38da2681cc412a9456b7dda7583ee, type: 2}
 --- !u!114 &-4098945568338165810
 MonoBehaviour:
