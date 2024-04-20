@@ -9,6 +9,7 @@ public class UiLocations
 {
     public RectTransform position;
     public bool isOccupied;
+    public bool isMoving;
     public ShootingTypesEnum type;
 }
 public class PowerUpUIHandler : MonoBehaviour
@@ -18,6 +19,8 @@ public class PowerUpUIHandler : MonoBehaviour
     [SerializeField] private RectTransform BaseLocation;
     [SerializeField] private List<UiLocations> locations;
     public float speed = 8f;
+
+    private RectTransform targetToMove;
     // Start is called before the first frame update
 
     public void MovePowerUpDown(ShootingTypesEnum type)
@@ -30,24 +33,29 @@ public class PowerUpUIHandler : MonoBehaviour
         RectTransform targetElement = getNextFreeLocation(type);
         if (!targetElement)
             return;
-        StartCoroutine(MoveElementToTarget(movingElement, targetElement));
+        StartCoroutine(MoveElementToTarget(movingElement, targetElement, null));
     }
     
     public void MovePowerBackUp(ShootingTypesEnum type)
     {
-        RectTransform targetToMove = getCurrentLocationOfRect(type);
-        if (targetToMove)
-            StartCoroutine(MoveElementToTarget(targetToMove, BaseLocation));
+        targetToMove = null;
+        UiLocations res = getCurrentLocationOfRect(type);
+        if (targetToMove && !res.isMoving)
+            StartCoroutine(MoveElementToTarget(targetToMove, BaseLocation, res));
     }
     
-    private IEnumerator MoveElementToTarget(RectTransform movingElement, RectTransform targetElement)
+    private IEnumerator MoveElementToTarget(RectTransform movingElement, RectTransform targetElement, UiLocations loc)
     {
+        if (loc != null)
+            loc.isMoving = true;
         while (Vector2.Distance(movingElement.anchoredPosition, targetElement.anchoredPosition) > 0.01f)
         {
             movingElement.anchoredPosition = Vector2.Lerp(movingElement.anchoredPosition, targetElement.anchoredPosition, speed * Time.deltaTime);
             yield return null;
         }
-        movingElement.anchoredPosition = targetElement.anchoredPosition;
+        movingElement.position = targetElement.position;
+        if (loc != null)
+            loc.isMoving = false;
     }
 
     private RectTransform getNextFreeLocation(ShootingTypesEnum type)
@@ -69,25 +77,24 @@ public class PowerUpUIHandler : MonoBehaviour
         return ret;
     }
     
-    private RectTransform getCurrentLocationOfRect(ShootingTypesEnum type)
+    private UiLocations getCurrentLocationOfRect(ShootingTypesEnum type)
     {
-        RectTransform res = null;
         foreach (UiLocations obj in locations)
         {
             if (obj.type == type)
             {
                 if (obj.type == ShootingTypesEnum.CONE)
                 {
-                    res = TripleShotPowerUp;
+                    targetToMove = TripleShotPowerUp;
                 }
                 else
                 {
-                    res = SpectralPowerUp;
+                    targetToMove = SpectralPowerUp;
                 }
 
                 obj.isOccupied = false;
                 obj.type = ShootingTypesEnum.BASE;
-                return res;
+                return obj;
             }
         }
         return null;
