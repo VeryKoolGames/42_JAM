@@ -120,7 +120,7 @@ public class ShootingManager : MonoBehaviour
 
     public void UpgradeShootingRate()
     {
-        currentShootRate -= 05f;
+        currentShootRate -= .05f;
     }
 
     public void UpgradePlayerDmg()
