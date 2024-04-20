@@ -24,6 +24,8 @@ public class ShootingManager : MonoBehaviour
     private bool isShooting; // When the next shot can happen
     public float powerUpTime; // Temps écoulé depuis que le powerUp est actif
     public CameraShake cameraShakeScript;
+
+    public Animator animator;
     
     
 
@@ -120,6 +122,7 @@ public class ShootingManager : MonoBehaviour
     void Shoot()
     {
         cameraShakeScript.ShakeCamera();
+        animator.SetTrigger("shoot");
         Vector3 screenMousePos = Input.mousePosition;
         screenMousePos.z = Camera.main.WorldToScreenPoint(transform.position).z;
         
@@ -132,6 +135,7 @@ public class ShootingManager : MonoBehaviour
     private void ShootBulletsInCone()
     {
         cameraShakeScript.ShakeCamera();
+        animator.SetTrigger("shoot");
         Vector3 screenMousePos = Input.mousePosition;
         screenMousePos.z = Camera.main.WorldToScreenPoint(transform.position).z;
         
