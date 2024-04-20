@@ -13,7 +13,7 @@ public class UpgradeButtonHandler : MonoBehaviour, IPointerEnterHandler, IPointe
     [SerializeField] private GameObject highlight;
     [SerializeField] private Sprite highlightSprite;
     [SerializeField] private Sprite baseSprite;
-    public static bool isDeactivated;
+    public bool isDeactivated;
 
    
     public bool isFullyUpgraded;

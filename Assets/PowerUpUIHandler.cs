@@ -33,29 +33,35 @@ public class PowerUpUIHandler : MonoBehaviour
         RectTransform targetElement = getNextFreeLocation(type);
         if (!targetElement)
             return;
-        StartCoroutine(MoveElementToTarget(movingElement, targetElement, null));
+        StartCoroutine(MoveElementToTarget(movingElement, targetElement));
     }
     
     public void MovePowerBackUp(ShootingTypesEnum type)
     {
         targetToMove = null;
-        UiLocations res = getCurrentLocationOfRect(type);
-        if (targetToMove && !res.isMoving)
-            StartCoroutine(MoveElementToTarget(targetToMove, BaseLocation, res));
+        int res = getCurrentLocationOfRect(type);
+        if (targetToMove && res != -1 && !locations[res].isMoving)
+            StartCoroutine(MoveElementToTargetUp(targetToMove, BaseLocation));
     }
     
-    private IEnumerator MoveElementToTarget(RectTransform movingElement, RectTransform targetElement, UiLocations loc)
+    private IEnumerator MoveElementToTarget(RectTransform movingElement, RectTransform targetElement)
     {
-        if (loc != null)
-            loc.isMoving = true;
         while (Vector2.Distance(movingElement.anchoredPosition, targetElement.anchoredPosition) > 0.01f)
         {
             movingElement.anchoredPosition = Vector2.Lerp(movingElement.anchoredPosition, targetElement.anchoredPosition, speed * Time.deltaTime);
             yield return null;
         }
         movingElement.position = targetElement.position;
-        if (loc != null)
-            loc.isMoving = false;
+    }
+    
+    private IEnumerator MoveElementToTargetUp(RectTransform movingElement, RectTransform targetElement)
+    {
+        while (Vector2.Distance(movingElement.anchoredPosition, targetElement.anchoredPosition) > 0.01f)
+        {
+            movingElement.anchoredPosition = Vector2.Lerp(movingElement.anchoredPosition, targetElement.anchoredPosition, speed * Time.deltaTime);
+            yield return null;
+        }
+        movingElement.position = targetElement.position;
     }
 
     private RectTransform getNextFreeLocation(ShootingTypesEnum type)
@@ -77,13 +83,13 @@ public class PowerUpUIHandler : MonoBehaviour
         return ret;
     }
     
-    private UiLocations getCurrentLocationOfRect(ShootingTypesEnum type)
+    private int getCurrentLocationOfRect(ShootingTypesEnum type)
     {
-        foreach (UiLocations obj in locations)
+        for (int i = 0; i < locations.Count; i++)
         {
-            if (obj.type == type)
+            if (locations[i].type == type)
             {
-                if (obj.type == ShootingTypesEnum.CONE)
+                if (locations[i].type == ShootingTypesEnum.CONE)
                 {
                     targetToMove = TripleShotPowerUp;
                 }
@@ -92,11 +98,11 @@ public class PowerUpUIHandler : MonoBehaviour
                     targetToMove = SpectralPowerUp;
                 }
 
-                obj.isOccupied = false;
-                obj.type = ShootingTypesEnum.BASE;
-                return obj;
+                locations[i].isOccupied = false;
+                locations[i].type = ShootingTypesEnum.BASE;
+                return i;
             }
         }
-        return null;
+        return -1;
     }
 }
