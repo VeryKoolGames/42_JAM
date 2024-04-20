@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: -5866872886106077644}
   - component: {fileID: -6640291007322062773}
   - component: {fileID: -6427319043970581254}
+  - component: {fileID: -9106977275383629968}
   m_Layer: 0
   m_Name: BuildingTwo
   m_TagString: Enemy
@@ -195,7 +196,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: 31e4f0285678743afb7ae3cd800e1d25, type: 3}
   m_PlayOnAwake: 0
-  m_Volume: 1
+  m_Volume: 0.6
   m_Pitch: 1.0919427
   Loop: 0
   Mute: 0
@@ -279,3 +280,16 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &-9106977275383629968
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5097423663636385184}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 95ca67b7f3fc94f0fae60bc6b96d7c8b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _spawnBuildingsManager: {fileID: 0}

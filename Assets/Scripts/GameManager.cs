@@ -12,6 +12,9 @@ public class GameManager : MonoBehaviour
     private float originalTime;
     private float originalSpeed;
     private bool isInStation;
+
+    [SerializeField] private SpawnEnemyManager leftSpawner;
+    [SerializeField] private SpawnEnemyManager rightSpawner;
     // private bool accelerationSpeed = 0.9f;
     public bool shouldTrainStop;
     
@@ -52,8 +55,19 @@ public class GameManager : MonoBehaviour
         StartCoroutine(startGameAgain());
     }
 
+    private void MakeGameHarder()
+    {
+        if (leftSpawner.topSpawnTreshold < 4)
+        {
+            return;
+        }
+        leftSpawner.topSpawnTreshold -= 1;
+        rightSpawner.topSpawnTreshold -= 1;
+    }
+
     private IEnumerator startStationSequence()
     {
+        MakeGameHarder();
         stationObject.GetComponent<StationMovement>().shouldMove = true;
         float duration = 9f;
         float startValue = globalSpeed.value;

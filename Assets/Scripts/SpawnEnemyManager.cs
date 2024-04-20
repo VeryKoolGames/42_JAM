@@ -1,14 +1,24 @@
+using System;
 using System.Collections;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class SpawnEnemyManager : MonoBehaviour
 {
     public GameObject enemyPrefab;
     public BoxCollider2D targetArea;
-    [SerializeField] private FloatVariable lowSpawnTreshold;
-    [SerializeField] private FloatVariable topSpawnTreshold;
+    [SerializeField] private FloatVariable lowSpawnTresholdSO;
+    [SerializeField] private FloatVariable topSpawnTresholdSO;
+    public float lowSpawnTreshold;
+    public float topSpawnTreshold;
     private float currentTime;
     private float timeToSpawn;
+
+    private void Start()
+    {
+        lowSpawnTreshold = lowSpawnTresholdSO.value;
+        topSpawnTreshold = topSpawnTresholdSO.value;
+    }
 
     void Update()
     {
@@ -17,7 +27,7 @@ public class SpawnEnemyManager : MonoBehaviour
         currentTime += Time.deltaTime;
         if (currentTime >= timeToSpawn && InputManager.Instance.inputEnabled)
         {
-            timeToSpawn = Random.Range(lowSpawnTreshold.value, topSpawnTreshold.value);
+            timeToSpawn = Random.Range(lowSpawnTreshold, topSpawnTreshold);
             currentTime = 0;
             GameObject enemy = Instantiate(enemyPrefab, transform.position, Quaternion.identity);
             StartCoroutine(MoveToRandomPoint(enemy));
