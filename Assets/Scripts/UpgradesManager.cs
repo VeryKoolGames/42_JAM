@@ -15,17 +15,16 @@ public class UpgradesManager : MonoBehaviour
 
     public void EventTrigger(UpgradesTypesEnum type)
     {
-        Debug.Log("Upgrade " + type + " chosen");
         switch (type)
         {
             case UpgradesTypesEnum.UPGRADEHEALTH:
-                playerHealth.value += 20;
+                GetComponent<HealthManager>().UpgradeHealth();
                 break;
             case UpgradesTypesEnum.UPGRADEBULLETSPEED:
-                shootRate.value -= .05f;
+                GetComponent<ShootingManager>().UpgradeShootingRate();
                 break;
             case UpgradesTypesEnum.UPGRADEDMG:
-                playerDmg.value += 10;
+                GetComponent<ShootingManager>().UpgradePlayerDmg();
                 break;
         }
     }

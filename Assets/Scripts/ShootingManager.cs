@@ -11,6 +11,9 @@ public class ShootingManager : MonoBehaviour
     public FloatVariable bulletSpeed;
     public float spreadAngle = 15f;
     public FloatVariable shootRate; // Time in seconds between shots
+    public FloatVariable playerDmg; // Time in seconds between shots
+    public float currentShootRate; // Time in seconds between shots
+    public float currentPlayerDmg; // Time in seconds between shots
     private float nextShootTime = 0f; // When the next shot can happen
     private bool isShooting; // When the next shot can happen
 
@@ -18,17 +21,17 @@ public class ShootingManager : MonoBehaviour
     {
         GetComponent<OnPowerUpListener>().OnPowerUpActivation += UpdateShootingState;
         currentShootingType = ShootingTypesEnum.BASE;
+        currentShootRate = shootRate.value;
+        currentPlayerDmg = playerDmg.value;
     }
 
     void Update()
     {
-        // Start shooting when the left mouse button is pressed down
         if (Input.GetMouseButtonDown(0) && InputManager.Instance.inputEnabled)
         {
             isShooting = true;
         }
 
-        // Stop shooting when the left mouse button is released
         if (Input.GetMouseButtonUp(0))
         {
             isShooting = false;
@@ -45,8 +48,7 @@ public class ShootingManager : MonoBehaviour
                     break;
             }
 
-            // Set the time for the next shot
-            nextShootTime = Time.time + shootRate.value;
+            nextShootTime = Time.time + currentShootRate;
         }
     }
 
@@ -111,14 +113,18 @@ public class ShootingManager : MonoBehaviour
         GameObject bullet = Instantiate(bulletPrefab, transform.position, Quaternion.identity);
         if (isSpectral)
             bullet.GetComponent<BulletController>().isSpectral = true;
+        bullet.GetComponent<BulletController>().playerDmg = (int)currentPlayerDmg;
         Rigidbody2D rb = bullet.GetComponent<Rigidbody2D>();
-        if (rb != null)
-        {
-            rb.velocity = direction * bulletSpeed.value;
-        }
-        else
-        {
-            Debug.LogError("Bullet prefab does not have a Rigidbody2D component attached.");
-        }
+        rb.velocity = direction * bulletSpeed.value;
+    }
+
+    public void UpgradeShootingRate()
+    {
+        currentShootRate -= 05f;
+    }
+
+    public void UpgradePlayerDmg()
+    {
+        currentPlayerDmg += 10;
     }
 }

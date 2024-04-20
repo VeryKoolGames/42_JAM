@@ -9,7 +9,6 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0c745281d95d48b98755b80c0c7b0fcb, type: 3}
-  m_Name: PlayerHealth
+  m_Script: {fileID: 11500000, guid: 97e1d50ecdef4c39981663e3777e9937, type: 3}
+  m_Name: OnEnemySpawn
   m_EditorClassIdentifier: 
-  value: 50

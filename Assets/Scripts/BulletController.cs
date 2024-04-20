@@ -1,29 +1,29 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class BulletController : MonoBehaviour
 {
     private Vector3 mousePos;
     public bool isSpectral;
+    public int playerDmg;
 
     [SerializeField] private OnPowerUpActivation _onPowerUpActivation;
+    [SerializeField] private OnEnemyDestroyed _enemyDestroyed;
 
     private Camera mainCamera;
 
     private Rigidbody2D rb;
 
-    public float speed;
     // Start is called before the first frame update
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.CompareTag("Enemy"))
+        if (other.CompareTag("Enemy") || other.CompareTag("EnemyBullet"))
         {
             if (!isSpectral)
                 Destroy(gameObject);
-            if (other.gameObject)
-                other.gameObject.GetComponent<EnemyController>().UpdateHealth();
+            bool res = other.gameObject.GetComponent<EnemyController>().UpdateHealth(playerDmg);
+            if (!res) return;
+            _enemyDestroyed.Raise(other.gameObject.GetComponent<EnemyController>().scoreGained);
+            Destroy(other.gameObject);
         }
         else if (other.CompareTag("PowerUp"))
         {

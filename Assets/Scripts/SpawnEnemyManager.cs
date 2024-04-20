@@ -15,7 +15,7 @@ public class SpawnEnemyManager : MonoBehaviour
         if (!InputManager.Instance.inputEnabled)
             return;
         currentTime += Time.deltaTime;
-        if (currentTime >= timeToSpawn)
+        if (currentTime >= timeToSpawn && InputManager.Instance.inputEnabled)
         {
             timeToSpawn = Random.Range(lowSpawnTreshold.value, topSpawnTreshold.value);
             currentTime = 0;

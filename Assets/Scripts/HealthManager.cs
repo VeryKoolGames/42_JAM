@@ -5,14 +5,35 @@ using UnityEngine;
 
 public class HealthManager : MonoBehaviour
 {
-    public FloatVariable playerHealth;
+    public FloatVariable playerMaxHealth;
+    private float playerHealth;
+    [SerializeField] private GameOverManager _gameOverManager;
+
+    private void Start()
+    {
+        playerHealth = playerMaxHealth.value;
+    }
 
     private void OnTriggerEnter2D(Collider2D other)
     {
         if (other.CompareTag("EnemyBullet"))
         {
-            playerHealth.value -= 10;
+            playerHealth -= 10;
             Destroy(other.gameObject);
+            if (playerHealth <= 0)
+            {
+                OnGameOver();
+            }
         }
+    }
+
+    private void OnGameOver()
+    {
+        _gameOverManager.OnGameOver();
+    }
+
+    public void UpgradeHealth()
+    {
+        playerHealth += 20;
     }
 }

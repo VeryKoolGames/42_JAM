@@ -1,19 +1,24 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class EnemyController : MonoBehaviour
 {
     public float enemyHealth;
+    public int scoreGained;
+    [SerializeField] private OnEnemySpawn onEnemySpawnEvent;
 
-    [SerializeField] private FloatVariable playerDmg;
-    public void UpdateHealth()
+    private void Start()
     {
-        enemyHealth -= playerDmg.value;
+        onEnemySpawnEvent.Raise(gameObject);
+    }
+
+    public bool UpdateHealth(int playerDmg)
+    {
+        enemyHealth -= playerDmg;
         if (enemyHealth <= 0)
         {
-            Destroy(gameObject);
+            return true;
         }
+        return false;
     }
 }

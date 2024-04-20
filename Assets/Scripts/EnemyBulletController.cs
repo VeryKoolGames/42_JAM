@@ -6,10 +6,12 @@ using UnityEngine;
 public class EnemyBulletController : MonoBehaviour
 {
     private Vector2 targetPosition;
+    [SerializeField] private OnEnemySpawn onEnemySpawnEvent;
 
     private void Start()
     {
         targetPosition = GameObject.FindGameObjectWithTag("Player").transform.position;
+        onEnemySpawnEvent.Raise(gameObject);
     }
 
     private void Update()
@@ -17,16 +19,4 @@ public class EnemyBulletController : MonoBehaviour
         transform.position = Vector2.MoveTowards(transform.position, targetPosition, 3f * Time.deltaTime);
     }
 
-    private void OnTriggerEnter2D(Collider2D other)
-    {
-        if (other.CompareTag("Bullet"))
-        {
-            Debug.Log("Bullet Encountered");
-            if (!other.gameObject.GetComponent<BulletController>().isSpectral)
-            {
-                Destroy(other.gameObject);
-            }
-            Destroy(gameObject);
-        }
-    }
 }

@@ -1,3 +1,5 @@
+using System;
+using System.Collections;
 using DefaultNamespace;
 using UnityEngine;
 using UnityEngine.UI;
@@ -16,7 +18,8 @@ public class UpgradeButtonHandler : MonoBehaviour
 
     private void RaiseEvent(UpgradesTypesEnum type)
     {
-        upgradeEvent.Raise(type);
-        canvas.SetActive(false);
+        // upgradeEvent.Raise(type);
+        GameManager.Instance.StartGameAgain();
     }
+    
 }

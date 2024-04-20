@@ -175,4 +175,4 @@ MonoBehaviour:
   isSpectral: 0
   _onPowerUpActivation: {fileID: 11400000, guid: 6dbf41774b89248eca81a41f7322bdd7,
     type: 2}
-  speed: 10
+  _enemyDestroyed: {fileID: 11400000, guid: e9e73b4083178445eab68e4ab11a945d, type: 2}

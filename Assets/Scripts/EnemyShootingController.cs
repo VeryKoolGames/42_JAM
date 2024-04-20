@@ -20,7 +20,7 @@ namespace DefaultNamespace
                 canShoot = true;
             }
 
-            if (canShoot)
+            if (canShoot && InputManager.Instance.inputEnabled)
             {
                 canShoot = false;
                 delayBeforeShooting = 0f;
