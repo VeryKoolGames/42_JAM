@@ -15,10 +15,18 @@ public class ShootingManager : MonoBehaviour
     public float spreadAngle = 15f;
     public FloatVariable shootRate; // Time in seconds between shots
     public FloatVariable playerDmg; // Time in seconds between shots
+    public FloatVariable drillTimeLeft; // Temps restant de la drill (je parle pas anglais en fait pauvre fou)
+    public FloatVariable tripleShotTimeLeft; // Temps restant du tripleShot
+    public FloatVariable powerUpDuration; // Durée en secondes des powerUps
     public float currentShootRate; // Time in seconds between shots
     public float currentPlayerDmg; // Time in seconds between shots
     private float nextShootTime = 0f; // When the next shot can happen
     private bool isShooting; // When the next shot can happen
+    public float powerUpTime; // Temps écoulé depuis que le powerUp est actif
+    public CameraShake cameraShakeScript;
+    
+    
+
 
     private void Start()
     {
@@ -26,6 +34,8 @@ public class ShootingManager : MonoBehaviour
         currentShootingType = ShootingTypesEnum.BASE;
         currentShootRate = shootRate.value;
         currentPlayerDmg = playerDmg.value;
+        drillTimeLeft.value = powerUpDuration.value;
+        tripleShotTimeLeft.value = powerUpDuration.value;
     }
 
     void Update()
@@ -74,23 +84,42 @@ public class ShootingManager : MonoBehaviour
 
     private IEnumerator PowerUpCountdown()
     {
-        yield return new WaitForSeconds(2f);
+        while (powerUpTime < powerUpDuration.value)
+        {
+            tripleShotTimeLeft.value = Mathf.Lerp(powerUpDuration.value, 0, powerUpTime / powerUpDuration.value);
+            powerUpTime += Time.deltaTime;
+            yield return null;
+        }
+
+        yield return new WaitForSeconds(powerUpDuration.value);
         currentShootingType = ShootingTypesEnum.BASE;
+        tripleShotTimeLeft.value = 0;
+        powerUpTime = 0;
     }
     
     private IEnumerator SpectralCountDown()
     {
+        while (powerUpTime < powerUpDuration.value)
+        {
+            drillTimeLeft.value = Mathf.Lerp(powerUpDuration.value, 0, powerUpTime / powerUpDuration.value);
+            powerUpTime += Time.deltaTime;
+            yield return null;
+        }
+
         Color color = bulletPrefab.GetComponent<SpriteRenderer>().color;
         color.a = 0.5f;
         bulletPrefab.GetComponent<SpriteRenderer>().color = color;
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(powerUpDuration.value);
         color.a = 1f;
         isSpectral = false;
         bulletPrefab.GetComponent<SpriteRenderer>().color = color;
+        drillTimeLeft.value = 0;
+        powerUpTime = 0;
     }
 
     void Shoot()
     {
+        cameraShakeScript.ShakeCamera();
         Vector3 screenMousePos = Input.mousePosition;
         screenMousePos.z = Camera.main.WorldToScreenPoint(transform.position).z;
         
@@ -102,6 +131,7 @@ public class ShootingManager : MonoBehaviour
     
     private void ShootBulletsInCone()
     {
+        cameraShakeScript.ShakeCamera();
         Vector3 screenMousePos = Input.mousePosition;
         screenMousePos.z = Camera.main.WorldToScreenPoint(transform.position).z;
         
