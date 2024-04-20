@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class EnemyController : MonoBehaviour
 {
@@ -10,6 +11,7 @@ public class EnemyController : MonoBehaviour
     public Material originalMaterial;
     public Material damageMaterial;
     [SerializeField] private OnEnemySpawn onEnemySpawnEvent;
+    [SerializeField] private AudioSource hitSound;
 
     private void Start()
     {
@@ -20,6 +22,7 @@ public class EnemyController : MonoBehaviour
     {
         enemyHealth -= playerDmg;
         StartCoroutine(FlashDamageEffect());
+        playHitSound();
         if (enemyHealth <= 0)
         {
             if (isABuilding)
@@ -36,5 +39,11 @@ public class EnemyController : MonoBehaviour
         GetComponent<Renderer>().material = damageMaterial;
         yield return new WaitForSeconds(0.1f);
         GetComponent<Renderer>().material = originalMaterial;
+    }
+
+    private void playHitSound()
+    {
+        hitSound.pitch = Random.Range(0.8f, 1.2f);
+        hitSound.Play();
     }
 }

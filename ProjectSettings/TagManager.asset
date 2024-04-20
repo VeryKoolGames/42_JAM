@@ -9,6 +9,7 @@ TagManager:
   - Bullet
   - EnemyBullet
   - DecorTP
+  - Vegetation
   layers:
   - Default
   - TransparentFX

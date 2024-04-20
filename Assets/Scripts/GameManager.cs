@@ -18,6 +18,7 @@ public class GameManager : MonoBehaviour
     public static GameManager Instance;
     private void Awake()
     {
+        globalSpeed.value = 0.7f;
         Instance = this;
     }
     
