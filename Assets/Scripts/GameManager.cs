@@ -14,8 +14,9 @@ public class GameManager : MonoBehaviour
     private bool isInStation;
     // private bool accelerationSpeed = 0.9f;
     public bool shouldTrainStop;
-    
     public static GameManager Instance;
+
+    public Animator animator;
     private void Awake()
     {
         globalSpeed.value = 0.7f;
@@ -48,12 +49,13 @@ public class GameManager : MonoBehaviour
 
     public void StartGameAgain()
     {
-        stationCanvas.SetActive(false);
+        animator.SetTrigger("close");
         StartCoroutine(startGameAgain());
     }
 
     private IEnumerator startStationSequence()
     {
+
         stationObject.GetComponent<StationMovement>().shouldMove = true;
         float duration = 9f;
         float startValue = globalSpeed.value;
@@ -68,6 +70,7 @@ public class GameManager : MonoBehaviour
 
         globalSpeed.value = 0;
         yield return new WaitForSeconds(2f);
+        animator.SetTrigger("open");
         stationCanvas.SetActive(true);
     }
 
@@ -82,6 +85,7 @@ public class GameManager : MonoBehaviour
     
     private IEnumerator startGameAgain()
     {
+
         float duration = 9f; // Total time over which the value should increase
         float startValue = 0f; // Starting value of the float, assuming it starts from 0
         float elapsedTime = 0f; // Time elapsed since the start of the increase
