@@ -55,7 +55,7 @@ public class UpgradesManager : MonoBehaviour
         currentUpgrade.currentIndex += 1;
         if (currentUpgrade.currentIndex == 3)
         {
-            UpgradeButtonHandler.isDeactivated = true;
+            _uiElementsList[idx].UpgradeButtonScript.isDeactivated = true;
         }
         _uiElementsList[idx] = currentUpgrade;
         CheckAllUpgrades();
