@@ -6,7 +6,8 @@ using UnityEngine;
 public class UpgradesManager : MonoBehaviour
 {
     [SerializeField] private FloatVariable playerHealth;
-    [SerializeField] private FloatVariable bulletSpeed;
+    [SerializeField] private FloatVariable shootRate;
+    [SerializeField] private FloatVariable playerDmg;
     void Start()
     {
         GetComponent<OnUpgradeChoiceListener>().OnPowerUpActivation += EventTrigger;
@@ -21,7 +22,10 @@ public class UpgradesManager : MonoBehaviour
                 playerHealth.value += 20;
                 break;
             case UpgradesTypesEnum.UPGRADEBULLETSPEED:
-                bulletSpeed.value += 10;
+                shootRate.value -= .05f;
+                break;
+            case UpgradesTypesEnum.UPGRADEDMG:
+                playerDmg.value += 10;
                 break;
         }
     }

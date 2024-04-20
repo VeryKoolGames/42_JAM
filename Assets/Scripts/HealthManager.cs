@@ -12,6 +12,7 @@ public class HealthManager : MonoBehaviour
         if (other.CompareTag("EnemyBullet"))
         {
             playerHealth.value -= 10;
+            Destroy(other.gameObject);
         }
     }
 }

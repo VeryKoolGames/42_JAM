@@ -10,6 +10,9 @@ public class ShootingManager : MonoBehaviour
     public GameObject bulletPrefab;
     public FloatVariable bulletSpeed;
     public float spreadAngle = 15f;
+    public FloatVariable shootRate; // Time in seconds between shots
+    private float nextShootTime = 0f; // When the next shot can happen
+    private bool isShooting; // When the next shot can happen
 
     private void Start()
     {
@@ -19,7 +22,18 @@ public class ShootingManager : MonoBehaviour
 
     void Update()
     {
+        // Start shooting when the left mouse button is pressed down
         if (Input.GetMouseButtonDown(0) && InputManager.Instance.inputEnabled)
+        {
+            isShooting = true;
+        }
+
+        // Stop shooting when the left mouse button is released
+        if (Input.GetMouseButtonUp(0))
+        {
+            isShooting = false;
+        }
+        if (isShooting && Time.time >= nextShootTime)
         {
             switch (currentShootingType)
             {
@@ -30,6 +44,9 @@ public class ShootingManager : MonoBehaviour
                     ShootBulletsInCone();
                     break;
             }
+
+            // Set the time for the next shot
+            nextShootTime = Time.time + shootRate.value;
         }
     }
 

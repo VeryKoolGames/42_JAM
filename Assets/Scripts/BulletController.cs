@@ -22,7 +22,8 @@ public class BulletController : MonoBehaviour
         {
             if (!isSpectral)
                 Destroy(gameObject);
-            other.gameObject.GetComponent<EnemyController>().UpdateHealth();
+            if (other.gameObject)
+                other.gameObject.GetComponent<EnemyController>().UpdateHealth();
         }
         else if (other.CompareTag("PowerUp"))
         {
