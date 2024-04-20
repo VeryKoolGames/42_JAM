@@ -18,6 +18,8 @@ public class UpgradesManager : MonoBehaviour
     [SerializeField] private FloatVariable shootRate;
     [SerializeField] private FloatVariable playerDmg;
     [SerializeField] private List<UIElements> _uiElementsList;
+
+    
     void Start()
     {
         GetComponent<OnUpgradeChoiceListener>().OnPowerUpActivation += EventTrigger;

@@ -11,7 +11,6 @@ public class BuildingMovement : MonoBehaviour
 
     private void Start()
     {
-        onEnemySpawnEvent.Raise(gameObject);
     }
 
     void Update()
