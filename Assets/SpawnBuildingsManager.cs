@@ -7,6 +7,9 @@ public class SpawnBuildingsManager : MonoBehaviour
     [SerializeField] private List<GameObject> BuildingsPrefabs = new List<GameObject>();
     [SerializeField] private FloatVariable speed;
     [SerializeField] private float delay;
+    public bool shouldSpawn = true;
+
+    private static int orderInLayer;
     // Start is called before the first frame update
 
     private void Start()
@@ -16,7 +19,7 @@ public class SpawnBuildingsManager : MonoBehaviour
 
     public void SpawnBuilding()
     {
-        if (!InputManager.Instance.inputEnabled)
+        if (!shouldSpawn)
             return;
         spawnBuilding();
     }
@@ -33,7 +36,10 @@ public class SpawnBuildingsManager : MonoBehaviour
         float yOffset = Random.Range(-0.02f, 0.02f);
         Vector3 spawnPosition = new Vector3(transform.position.x, transform.position.y + yOffset, transform.position.z);
 
-        Instantiate(BuildingsPrefabs[random], spawnPosition, Quaternion.identity);
+        GameObject obj = Instantiate(BuildingsPrefabs[random], spawnPosition, Quaternion.identity);
+        obj.GetComponent<SpriteRenderer>().sortingOrder = orderInLayer++;
+        if (orderInLayer > 10)
+            orderInLayer = 0;
     }
     
 }

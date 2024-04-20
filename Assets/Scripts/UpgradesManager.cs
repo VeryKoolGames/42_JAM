@@ -9,7 +9,7 @@ struct UIElements
 {
     public int currentIndex;
     public List<GameObject> upgradeSteps;
-    public GameObject coverObject;
+    public UpgradeButtonHandler UpgradeButtonScript;
 }
 
 public class UpgradesManager : MonoBehaviour
@@ -31,14 +31,14 @@ public class UpgradesManager : MonoBehaviour
         {
             case UpgradesTypesEnum.UPGRADEHEALTH:
                 GetComponent<HealthManager>().UpgradeHealth();
-                UIUpdate(2);
+                UIUpdate(1);
                 break;
             case UpgradesTypesEnum.UPGRADEBULLETSPEED:
                 GetComponent<ShootingManager>().UpgradeShootingRate();
                 UIUpdate(0);
                 break;
             case UpgradesTypesEnum.UPGRADEDMG:
-                UIUpdate(1);
+                UIUpdate(2);
                 GetComponent<ShootingManager>().UpgradePlayerDmg();
                 break;
         }
@@ -55,7 +55,7 @@ public class UpgradesManager : MonoBehaviour
         currentUpgrade.currentIndex += 1;
         if (currentUpgrade.currentIndex == 3)
         {
-            currentUpgrade.coverObject.SetActive(true);
+            currentUpgrade.UpgradeButtonScript.isDeactivated = true;
         }
         _uiElementsList[idx] = currentUpgrade;
         CheckAllUpgrades();

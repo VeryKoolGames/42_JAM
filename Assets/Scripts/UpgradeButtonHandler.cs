@@ -13,6 +13,7 @@ public class UpgradeButtonHandler : MonoBehaviour, IPointerEnterHandler, IPointe
     [SerializeField] private GameObject highlight;
     [SerializeField] private Sprite highlightSprite;
     [SerializeField] private Sprite baseSprite;
+    public bool isDeactivated;
 
    
     public bool isFullyUpgraded;
@@ -24,12 +25,16 @@ public class UpgradeButtonHandler : MonoBehaviour, IPointerEnterHandler, IPointe
     
     public void OnPointerEnter(PointerEventData eventData)
     {
+        if (isDeactivated)
+            return;
         highlight.SetActive(true);
         GetComponent<Image>().sprite = highlightSprite;
     }
 
     public void OnPointerExit(PointerEventData eventData)
     {
+        if (isDeactivated)
+            return;
         highlight.SetActive(false);
         GetComponent<Image>().sprite = baseSprite;
     }
@@ -37,6 +42,8 @@ public class UpgradeButtonHandler : MonoBehaviour, IPointerEnterHandler, IPointe
 
     public void OnPointerClick(PointerEventData eventData)
     {
+        if (isDeactivated)
+            return;
         highlight.SetActive(false);
         GetComponent<Image>().sprite = baseSprite;
         upgradeEvent.Raise(type);
