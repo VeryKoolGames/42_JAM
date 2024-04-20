@@ -21,7 +21,10 @@ public class BulletController : MonoBehaviour
             if (!isSpectral)
                 Destroy(gameObject);
             bool res = other.gameObject.GetComponent<EnemyController>().UpdateHealth(playerDmg);
-            if (!res) return;
+            if (!res)
+            {
+                return;
+            };
             _enemyDestroyed.Raise(other.gameObject.GetComponent<EnemyController>().scoreGained);
             
         }

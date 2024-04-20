@@ -28,7 +28,7 @@ public class SpawnDecorManager : MonoBehaviour
         if (currentTime >= timeToSpawn)
         {
             int random = Random.Range(0, 10);
-            if (random == 1)
+            if (random > 5)
             {
                 spawnPowerUp();
             }

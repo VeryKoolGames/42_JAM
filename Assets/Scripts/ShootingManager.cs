@@ -7,6 +7,7 @@ public class ShootingManager : MonoBehaviour
     [SerializeField] private AudioSource gunSound;
     [SerializeField] private AudioSource powerUpSound;
     [SerializeField] private Transform shootPos;
+    [SerializeField] private PowerUpUIHandler powerUpUIHandler;
     private bool isSpectral;
     private ShootingTypesEnum currentShootingType;
     private Vector3 mousePos;
@@ -22,7 +23,11 @@ public class ShootingManager : MonoBehaviour
     public float currentPlayerDmg; // Time in seconds between shots
     private float nextShootTime = 0f; // When the next shot can happen
     private bool isShooting; // When the next shot can happen
-    public float powerUpTime; // Temps écoulé depuis que le powerUp est actif
+    private bool isSpectralOn; // When the next shot can happen
+    private bool isConeOn; // When the next shot can happen
+    private Color bulletColor; // When the next shot can happen
+    public float SpectralpowerUpTime; // Temps écoulé depuis que le powerUp est actif
+    public float ConepowerUpTime; // Temps écoulé depuis que le powerUp est actif
     public CameraShake cameraShakeScript;
 
     public Animator animator;
@@ -38,10 +43,47 @@ public class ShootingManager : MonoBehaviour
         currentPlayerDmg = playerDmg.value;
         drillTimeLeft.value = powerUpDuration.value;
         tripleShotTimeLeft.value = powerUpDuration.value;
+        bulletColor = bulletPrefab.GetComponent<SpriteRenderer>().color;
+    }
+
+    private void HandleSpectral()
+    {
+        if (isSpectralOn)
+        {
+            SpectralpowerUpTime += Time.deltaTime;
+            if (SpectralpowerUpTime > powerUpDuration.value)
+            {
+                isSpectralOn = false;
+                bulletColor.a = 1f;
+                isSpectral = false;
+                bulletPrefab.GetComponent<SpriteRenderer>().color = bulletColor;
+                powerUpUIHandler.MovePowerBackUp(ShootingTypesEnum.SPECTRAL);
+                drillTimeLeft.value = 0;
+            }
+            drillTimeLeft.value = Mathf.Lerp(powerUpDuration.value, 0, SpectralpowerUpTime / powerUpDuration.value);
+        }
+    }
+    
+    private void HandleCone()
+    {
+        if (isConeOn)
+        {
+            ConepowerUpTime += Time.deltaTime;
+            if (ConepowerUpTime > powerUpDuration.value)
+            {
+                isConeOn = false;
+                powerUpUIHandler.MovePowerBackUp(ShootingTypesEnum.CONE);
+                currentShootingType = ShootingTypesEnum.BASE;
+                tripleShotTimeLeft.value = 0;
+                ConepowerUpTime = 0;
+            }
+            tripleShotTimeLeft.value = Mathf.Lerp(powerUpDuration.value, 0, ConepowerUpTime / powerUpDuration.value);        }
     }
 
     void Update()
     {
+        HandleSpectral();
+        HandleCone();
         if (Input.GetMouseButtonDown(0) && InputManager.Instance.inputEnabled)
         {
             gunSound.Play();
@@ -74,50 +116,52 @@ public class ShootingManager : MonoBehaviour
         powerUpSound.Play();
         if (newType == ShootingTypesEnum.SPECTRAL)
         {
+            powerUpUIHandler.MovePowerUpDown(ShootingTypesEnum.SPECTRAL);
+            SpectralpowerUpTime = 0;
+            Color color = bulletPrefab.GetComponent<SpriteRenderer>().color;
+            color.a = 0.5f;
+            bulletPrefab.GetComponent<SpriteRenderer>().color = color;
             isSpectral = true;
-            StartCoroutine(SpectralCountDown());
+            isSpectralOn = true;
         }
         else
         {
+            powerUpUIHandler.MovePowerUpDown(ShootingTypesEnum.CONE);
+            ConepowerUpTime = 0;
             currentShootingType = newType;
-            StartCoroutine(PowerUpCountdown());
+            isConeOn = true;
         }
     }
 
-    private IEnumerator PowerUpCountdown()
-    {
-        while (powerUpTime < powerUpDuration.value)
-        {
-            tripleShotTimeLeft.value = Mathf.Lerp(powerUpDuration.value, 0, powerUpTime / powerUpDuration.value);
-            powerUpTime += Time.deltaTime;
-            yield return null;
-        }
-
-        yield return new WaitForSeconds(powerUpDuration.value);
-        currentShootingType = ShootingTypesEnum.BASE;
-        tripleShotTimeLeft.value = 0;
-        powerUpTime = 0;
-    }
+    // private IEnumerator PowerUpCountdown()
+    // {
+    //     powerUpUIHandler.MovePowerUpDown(ShootingTypesEnum.CONE);
+    //     while (ConepowerUpTime < powerUpDuration.value)
+    //     {
+    //         tripleShotTimeLeft.value = Mathf.Lerp(powerUpDuration.value, 0, ConepowerUpTime / powerUpDuration.value);
+    //         ConepowerUpTime += Time.deltaTime;
+    //         yield return null;
+    //     }
+    //
+    //     yield return new WaitForSeconds(powerUpDuration.value);
+    //     currentShootingType = ShootingTypesEnum.BASE;
+    //     tripleShotTimeLeft.value = 0;
+    //     ConepowerUpTime = 0;
+    // }
     
-    private IEnumerator SpectralCountDown()
-    {
-        while (powerUpTime < powerUpDuration.value)
-        {
-            drillTimeLeft.value = Mathf.Lerp(powerUpDuration.value, 0, powerUpTime / powerUpDuration.value);
-            powerUpTime += Time.deltaTime;
-            yield return null;
-        }
-
-        Color color = bulletPrefab.GetComponent<SpriteRenderer>().color;
-        color.a = 0.5f;
-        bulletPrefab.GetComponent<SpriteRenderer>().color = color;
-        yield return new WaitForSeconds(powerUpDuration.value);
-        color.a = 1f;
-        isSpectral = false;
-        bulletPrefab.GetComponent<SpriteRenderer>().color = color;
-        drillTimeLeft.value = 0;
-        powerUpTime = 0;
-    }
+    // private IEnumerator SpectralCountDown()
+    // {
+    //     powerUpUIHandler.MovePowerUpDown(ShootingTypesEnum.SPECTRAL);
+    //     while (SpectralpowerUpTime < powerUpDuration.value)
+    //     {
+    //         drillTimeLeft.value = Mathf.Lerp(powerUpDuration.value, 0, SpectralpowerUpTime / powerUpDuration.value);
+    //         SpectralpowerUpTime += Time.deltaTime;
+    //         yield return null;
+    //     }
+    //
+    //     powerUpUIHandler.MovePowerBackUp(ShootingTypesEnum.SPECTRAL);
+    //     SpectralpowerUpTime = 0;
+    // }
 
     void Shoot()
     {
