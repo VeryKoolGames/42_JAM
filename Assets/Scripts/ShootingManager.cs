@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class ShootingManager : MonoBehaviour
 {
+    [SerializeField] private AudioSource gunSound;
+    [SerializeField] private AudioSource powerUpSound;
+    [SerializeField] private Transform shootPos;
     private bool isSpectral;
     private ShootingTypesEnum currentShootingType;
     private Vector3 mousePos;
@@ -29,11 +32,13 @@ public class ShootingManager : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0) && InputManager.Instance.inputEnabled)
         {
+            gunSound.Play();
             isShooting = true;
         }
 
         if (Input.GetMouseButtonUp(0))
         {
+            gunSound.Stop();
             isShooting = false;
         }
         if (isShooting && Time.time >= nextShootTime)
@@ -54,6 +59,7 @@ public class ShootingManager : MonoBehaviour
 
     public void UpdateShootingState(ShootingTypesEnum newType)
     {
+        powerUpSound.Play();
         if (newType == ShootingTypesEnum.SPECTRAL)
         {
             isSpectral = true;
@@ -110,7 +116,7 @@ public class ShootingManager : MonoBehaviour
 
     private void InstantiateAndShootBullet(Vector2 direction)
     {
-        GameObject bullet = Instantiate(bulletPrefab, transform.position, Quaternion.identity);
+        GameObject bullet = Instantiate(bulletPrefab, shootPos.position, Quaternion.identity);
         if (isSpectral)
             bullet.GetComponent<BulletController>().isSpectral = true;
         bullet.GetComponent<BulletController>().playerDmg = (int)currentPlayerDmg;
