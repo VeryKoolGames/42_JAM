@@ -165,7 +165,9 @@ public class ShootingManager : MonoBehaviour
 
     void Shoot()
     {
+        cameraShakeScript.ShakeIntensity = 0.14f;
         cameraShakeScript.ShakeCamera();
+        
         animator.SetTrigger("shoot");
         Vector3 screenMousePos = Input.mousePosition;
         screenMousePos.z = Camera.main.WorldToScreenPoint(transform.position).z;
@@ -178,6 +180,7 @@ public class ShootingManager : MonoBehaviour
     
     private void ShootBulletsInCone()
     {
+        cameraShakeScript.ShakeIntensity = 0.3f;
         cameraShakeScript.ShakeCamera();
         animator.SetTrigger("shoot");
         Vector3 screenMousePos = Input.mousePosition;

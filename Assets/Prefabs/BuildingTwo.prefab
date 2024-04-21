@@ -84,6 +84,37 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!1 &5023089411892380871
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6128774556905371929}
+  m_Layer: 0
+  m_Name: ParticleSpawn
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6128774556905371929
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5023089411892380871}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: -0.1793673, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 5880495403491506830}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &5097423663636385184
 GameObject:
   m_ObjectHideFlags: 0
@@ -121,6 +152,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2415532047098959700}
+  - {fileID: 6128774556905371929}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &7459456305040131105
@@ -269,6 +301,9 @@ MonoBehaviour:
   vegetationList: {fileID: 11400000, guid: 994493f0331f2468482b11317956d1ab, type: 2}
   vegetationPatchList: {fileID: 11400000, guid: fa8763c69eca74168b9d5d11f76db9b9,
     type: 2}
+  particles: {fileID: 2076107466258416668, guid: 578d34faccddd4024ab0cd637d6b84f8,
+    type: 3}
+  particleSpawnPoint: {fileID: 6128774556905371929}
 --- !u!82 &-6427319043970581254
 AudioSource:
   m_ObjectHideFlags: 0

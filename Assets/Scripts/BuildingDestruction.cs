@@ -7,6 +7,8 @@ public class BuildingDestruction : MonoBehaviour
     public float shrinkDuration;
     public GameObjectsSO vegetationList;
     public GameObjectsSO vegetationPatchList;
+    public GameObject particles;
+    public Transform particleSpawnPoint;
     private float botTreshold = .2f;
     private float topTreshold = .2f;
 
@@ -14,6 +16,8 @@ public class BuildingDestruction : MonoBehaviour
     {
         Vector3 originalScale = transform.localScale;
         float elapsedTime = 0;
+
+        Instantiate(particles, particleSpawnPoint.position, Quaternion.identity);
 
         while (elapsedTime < shrinkDuration)
         {
