@@ -48,13 +48,13 @@ public class UpgradeButtonHandler : MonoBehaviour, IPointerEnterHandler, IPointe
         GetComponent<Image>().sprite = baseSprite;
         upgradeEvent.Raise(type);
         GameManager.Instance.StartGameAgain();
-        StartCoroutine(makeButtonsUnclickable());
+        // StartCoroutine(makeButtonsUnclickable());
     }
 
-    IEnumerator makeButtonsUnclickable()
-    {
-        isDeactivated = true;
-        yield return new WaitForSeconds(2f);
-        isDeactivated = false;
-    }
+    // IEnumerator makeButtonsUnclickable()
+    // {
+    //     isDeactivated = true;
+    //     yield return new WaitForSeconds(9f);
+    //     isDeactivated = false;
+    // }
 }
