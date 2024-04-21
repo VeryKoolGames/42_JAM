@@ -12,4 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0c745281d95d48b98755b80c0c7b0fcb, type: 3}
   m_Name: TimeBeforeStation
   m_EditorClassIdentifier: 
-  value: 5
+  value: 45

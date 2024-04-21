@@ -204,11 +204,11 @@ public class ShootingManager : MonoBehaviour
 
     public void UpgradeShootingRate()
     {
-        currentShootRate -= .05f;
+        currentShootRate -= .02f;
     }
 
     public void UpgradePlayerDmg()
     {
-        currentPlayerDmg += 10;
+        currentPlayerDmg += 5;
     }
 }

@@ -267,8 +267,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   shrinkDuration: 0.2
   vegetationList: {fileID: 11400000, guid: 994493f0331f2468482b11317956d1ab, type: 2}
-  botTreshold: 0.5
-  topTreshold: 0.5
+  vegetationPatchList: {fileID: 11400000, guid: fa8763c69eca74168b9d5d11f76db9b9,
+    type: 2}
 --- !u!82 &-6427319043970581254
 AudioSource:
   m_ObjectHideFlags: 0

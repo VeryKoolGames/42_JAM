@@ -6,8 +6,9 @@ public class BuildingDestruction : MonoBehaviour
 {
     public float shrinkDuration;
     public GameObjectsSO vegetationList;
-    [SerializeField] private float botTreshold = .5f;
-    [SerializeField] private float topTreshold = .5f;
+    public GameObjectsSO vegetationPatchList;
+    private float botTreshold = .2f;
+    private float topTreshold = .2f;
 
     public IEnumerator OnBuildingDestroyed()
     {
@@ -29,11 +30,15 @@ public class BuildingDestruction : MonoBehaviour
             indices.Add(Random.Range(0, vegetationList.Objects.Count));
         }
 
+        GameObject patch = vegetationPatchList.Objects[Random.Range(0, vegetationPatchList.Objects.Count)];
+
         foreach (int index in indices)
         {
             Vector3 randomPosition = transform.position + new Vector3(Random.Range(-botTreshold, topTreshold), Random.Range(-botTreshold, topTreshold), 0);
             Instantiate(vegetationList.Objects[index], randomPosition, Quaternion.identity);
         }
+        Vector3 randPosition = transform.position + new Vector3(Random.Range(-0.2f, 0.2f), Random.Range(-0.2f, 0.2f), 0);
+        Instantiate(patch, randPosition, Quaternion.identity);
         Destroy(gameObject);
     }
 }
