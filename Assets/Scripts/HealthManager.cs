@@ -10,9 +10,11 @@ public class HealthManager : MonoBehaviour
     public FloatVariable playerMaxHealth;
     private float playerHealth;
     [SerializeField] private GameOverManager _gameOverManager;
+    [SerializeField] private Animator playerAnimator;
     [SerializeField] private Slider healthBar;
-    [SerializeField] private GameObject turretHead;
-    [SerializeField] private GameObject turretFoot;
+    // [SerializeField] private GameObject turretHead;
+    // [SerializeField] private GameObject turretFoot;
+    [SerializeField] private GameObject[] objectsToUpdate;
     [SerializeField] private AudioSource[] hitSounds;
     public Material originalMaterial;
     public Material damageMaterial;
@@ -29,6 +31,7 @@ public class HealthManager : MonoBehaviour
             playerHealth -= 10;
             healthBar.value -= 10;
             PlayRandomHitSound();
+            playerAnimator.SetTrigger("hit");
             StartCoroutine(FlashDamageEffect());
             Destroy(other.gameObject);
             if (playerHealth <= 0)
@@ -52,11 +55,15 @@ public class HealthManager : MonoBehaviour
     
     private IEnumerator FlashDamageEffect()
     {
-        turretHead.GetComponent<Renderer>().material = damageMaterial;
-        turretFoot.GetComponent<Renderer>().material = damageMaterial;
-        yield return new WaitForSeconds(0.2f);
-        turretHead.GetComponent<Renderer>().material = originalMaterial;
-        turretFoot.GetComponent<Renderer>().material = originalMaterial;
+        foreach (var obj in objectsToUpdate)
+        {
+            obj.GetComponent<Renderer>().material = damageMaterial;
+        }
+        yield return new WaitForSeconds(0.1f);
+        foreach (var obj in objectsToUpdate)
+        {
+            obj.GetComponent<Renderer>().material = originalMaterial;
+        }
     }
 
     private void PlayRandomHitSound()
