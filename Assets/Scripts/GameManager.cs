@@ -42,7 +42,7 @@ public class GameManager : MonoBehaviour
         ObjectToBeDestroyed.Add(newObj);
     }
 
-    void Update()
+    void FixedUpdate()
     {
         originalTime -= Time.deltaTime;
         if (originalTime <= 0f && !isInStation && shouldTrainStop)
