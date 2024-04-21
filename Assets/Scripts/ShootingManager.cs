@@ -133,36 +133,6 @@ public class ShootingManager : MonoBehaviour
         }
     }
 
-    // private IEnumerator PowerUpCountdown()
-    // {
-    //     powerUpUIHandler.MovePowerUpDown(ShootingTypesEnum.CONE);
-    //     while (ConepowerUpTime < powerUpDuration.value)
-    //     {
-    //         tripleShotTimeLeft.value = Mathf.Lerp(powerUpDuration.value, 0, ConepowerUpTime / powerUpDuration.value);
-    //         ConepowerUpTime += Time.deltaTime;
-    //         yield return null;
-    //     }
-    //
-    //     yield return new WaitForSeconds(powerUpDuration.value);
-    //     currentShootingType = ShootingTypesEnum.BASE;
-    //     tripleShotTimeLeft.value = 0;
-    //     ConepowerUpTime = 0;
-    // }
-    
-    // private IEnumerator SpectralCountDown()
-    // {
-    //     powerUpUIHandler.MovePowerUpDown(ShootingTypesEnum.SPECTRAL);
-    //     while (SpectralpowerUpTime < powerUpDuration.value)
-    //     {
-    //         drillTimeLeft.value = Mathf.Lerp(powerUpDuration.value, 0, SpectralpowerUpTime / powerUpDuration.value);
-    //         SpectralpowerUpTime += Time.deltaTime;
-    //         yield return null;
-    //     }
-    //
-    //     powerUpUIHandler.MovePowerBackUp(ShootingTypesEnum.SPECTRAL);
-    //     SpectralpowerUpTime = 0;
-    // }
-
     void Shoot()
     {
         cameraShakeScript.ShakeIntensity = 0.14f;
