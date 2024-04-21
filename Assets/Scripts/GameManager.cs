@@ -115,7 +115,7 @@ public class GameManager : MonoBehaviour
         float duration = 9f; // Total time over which the value should increase
         float startValue = 0f; // Starting value of the float, assuming it starts from 0
         float elapsedTime = 0f; // Time elapsed since the start of the increase
-
+        stationCanvas.SetActive(false);
         while (elapsedTime < duration)
         {
             globalSpeed.value = Mathf.Lerp(startValue, originalSpeed, elapsedTime / duration);
@@ -126,7 +126,7 @@ public class GameManager : MonoBehaviour
         }
 
         runningSound.volume = .1f;
-        stationCanvas.SetActive(false);
+        // stationCanvas.SetActive(false);
         yield return new WaitForSeconds(2f);
         originalTime = TimeBeforeStation.value;
         isInStation = false;
