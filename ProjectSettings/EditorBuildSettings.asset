@@ -8,7 +8,10 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/StartScene.unity
     guid: 91434135f945b4728b1eaec0367c7331
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/Ben4.unity
     guid: f72d13de68c15409caec1f458f884702
+  - enabled: 1
+    path: Assets/Scenes/Vic3.unity
+    guid: ae94ff5ed03f2467097f794b8309d0ff
   m_configObjects: {}
